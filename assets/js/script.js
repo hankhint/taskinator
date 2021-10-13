@@ -10,19 +10,19 @@ var deleteTask = function (taskId) {
 };
 
 var editTask = function(taskId) {
-// get task list item element
+ // get task list item element
 var taskSelected = document.querySelector(".task-item[data-task-id='" + taskId + "']");
 
 // get content from task name and type
 var taskName = taskSelected.querySelector("h3.task-name").textContent;
 
-var taskType = taskSelected.querySelector("span.task-type").textContent;
 
+var taskType = taskSelected.querySelector("span.task-type").textContent;
 document.querySelector("input[name='task-name']").value = taskName;
 document.querySelector("select[name='task-type']").value = taskType;
 document.querySelector("#save-task").textContent = "Save Task";
 formEl.setAttribute("data-task-id", taskId);
-  };
+};
 
 var taskFormHandler = function (event) {
   event.preventDefault();
@@ -35,6 +35,8 @@ var taskFormHandler = function (event) {
     return false;
   }
   formEl.reset();
+  var isEdit = formEl.hasAttribute("data-task-id");
+console.log(isEdit);
   // package up data as an object
   var taskDataObj = {
     name: taskNameInput,
@@ -113,20 +115,20 @@ var createTaskActions = function (taskId) {
 };
 
 var taskButtonHandler = function(event) {
-    // get target element from event
-    var targetEl = event.target;
-  
-    // edit button was clicked
-    if (targetEl.matches(".edit-btn")) {
-      var taskId = targetEl.getAttribute("data-task-id");
-      editTask(taskId);
-    } 
-    // delete button was clicked
-    else if (targetEl.matches(".delete-btn")) {
-      var taskId = targetEl.getAttribute("data-task-id");
-      deleteTask(taskId);
-    }
-  };
+  // get target element from event
+  var targetEl = event.target;
+
+  // edit button was clicked
+  if (targetEl.matches(".edit-btn")) {
+    var taskId = targetEl.getAttribute("data-task-id");
+    editTask(taskId);
+  } 
+  // delete button was clicked
+  else if (targetEl.matches(".delete-btn")) {
+    var taskId = targetEl.getAttribute("data-task-id");
+    deleteTask(taskId);
+  }
+};
 
 formEl.addEventListener("submit", taskFormHandler);
 pageContentEl.addEventListener("click", taskButtonHandler);
